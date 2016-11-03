@@ -10,7 +10,7 @@ In 2017, we will organize a programming contest at the [International Workshop o
 
 4. We will submit the generated YIG files from your submissions until **May 10, 2017** and announce all the results on this webpage.
 
-5. The submissions are rated according the the number of gates in the YIGs.  If for some benchmark no YIG exists or the algorithm reaches the timeout limit, we take the worst case size over all submissions and multiply it by 1.5.  If for some benchmark an incorrect YIG exists, we take the worst case size over all submissions and multiply it by 2.
+5. The submissions are rated according to the number of gates in the YIGs.  If for some benchmark no YIG exists or the algorithm reaches the timeout limit, we take the worst case size over all submissions and multiply it by 1.5.  If for some benchmark an incorrect YIG exists, we take the worst case size over all submissions and multiply it by 2.
 
 6. You are encouraged to share your source code with the IWLS community, but it's not required or has any effect on the rating.  If you want to share, you can either point us to an online repository that we will link to this and the IWLS webpage.  If you prefer to share the source code only among the IWLS participants, we will copy your code onto the proceeding pen drives.
 
