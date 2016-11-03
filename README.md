@@ -14,7 +14,7 @@ In 2017, we will organize a programming contest at the [International Workshop o
 
 6. You are encouraged to share your source code with the IWLS community, but it's not required or has any effect on the rating.  If you want to share, you can either point us to an online repository that we will link to this and the IWLS webpage.  If you prefer to share the source code only among the IWLS participants, we will copy your code onto the proceeding pen drives.
 
-If you have any question, please fill an [issue](https://github.com/msoeken/iwls2017-contest/issues).
+If you have any question, please create an [issue](https://github.com/msoeken/iwls2017-contest/issues).
 
 ## Awards
 
