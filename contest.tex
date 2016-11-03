@@ -1,0 +1,125 @@
+\magnification\magstephalf
+\parskip3pt
+\baselineskip12pt
+
+\output={\shipout\hbox{\box255}}
+
+\input tikz
+\usetikzlibrary{calc}
+
+\centerline{\bf IWLS 2017 programming contest}
+\centerline{Mathias Soeken, \sl EPFL}
+
+\bigskip
+
+\noindent {\bf The $Y$ function.} \enspace Let $G_n = (V_n, E_n)$ be a
+triangular grid of height $n$.  Triangular grids up to height $4$ are the
+following.
+%
+$$
+G_1 =
+\tikzpicture[baseline=(c)]
+  \fill (0,0) circle (2pt);
+  \coordinate (c) at ([yshift=-2pt] current bounding box.center);
+\endtikzpicture \qquad
+G_2 =
+\tikzpicture[baseline=(c)]
+  \fill (0,0) circle (2pt);
+  \fill ($(0,0)+(240:10pt)$) coordinate (b) circle (2pt);
+  \fill ($(0,0)+(-60:10pt)$) coordinate (c) circle (2pt);
+  \draw (0,0) -- (b) -- (c) -- (0,0);
+  \coordinate (c) at ([yshift=-2pt] current bounding box.center);
+\endtikzpicture \qquad
+G_3 =
+\tikzpicture[baseline=(c)]
+  \fill (0,0) circle (2pt);
+  \fill ($(0,0)+(240:10pt)$) coordinate (b) circle (2pt);
+  \fill ($(0,0)+(-60:10pt)$) coordinate (c) circle (2pt);
+  \fill ($(b)+(240:10pt)$) coordinate (d) circle (2pt);
+  \fill ($(b)+(-60:10pt)$) coordinate (e) circle (2pt);
+  \fill ($(c)+(-60:10pt)$) coordinate (f) circle (2pt);
+  \draw (0,0) -- (b) -- (c) -- (f) -- (e) -- (d) -- (b) -- (e) -- (c) -- (0,0);
+  \coordinate (c) at ([yshift=-2pt] current bounding box.center);
+\endtikzpicture \qquad
+G_4 =
+\tikzpicture[baseline=(c)]
+  \fill (0,0) circle (2pt);
+  \fill ($(0,0)+(240:10pt)$) coordinate (b) circle (2pt);
+  \fill ($(0,0)+(-60:10pt)$) coordinate (c) circle (2pt);
+  \fill ($(b)+(240:10pt)$) coordinate (d) circle (2pt);
+  \fill ($(b)+(-60:10pt)$) coordinate (e) circle (2pt);
+  \fill ($(c)+(-60:10pt)$) coordinate (f) circle (2pt);
+  \fill ($(d)+(240:10pt)$) coordinate (g) circle (2pt);
+  \fill ($(d)+(-60:10pt)$) coordinate (h) circle (2pt);
+  \fill ($(f)+(240:10pt)$) coordinate (i) circle (2pt);
+  \fill ($(f)+(-60:10pt)$) coordinate (j) circle (2pt);
+  \draw (0,0) -- (b) -- (c) -- (f) -- (e) -- (d) -- (g) -- (h) -- (i) -- (j) -- (f) -- (i) -- (e) -- (h) -- (d) -- (b) -- (e) -- (c) -- (0,0);
+  \coordinate (c) at ([yshift=-2pt] current bounding box.center);
+\endtikzpicture
+\eqno(1)
+$$
+%
+The grid of $G_n$ has $n(n+1)/2$ nodes and three sides, each of which is having
+$n$ nodes.  We call these sides left, right, and bottom.  From a triangular grid
+$G_n$ we can obtain triangular grids of height $n-1$ by removing all vertices of
+the left, right, or bottom side.  We call these grid $G_n^l$, $G_n^r$, and
+$G_n^b$, respectively.
+
+Let $Y$ be a function that maps a triangular grid $G_n = (V_n, E_n)$ into a
+Boolean function using the following recursive procedure:
+%
+$$
+Y(G_n) = \cases{x_v & if $n = 1$ and $V_1 = \{v\}$, \cr \langle Y(G_n^b)Y(G_n^r)Y(G_n^l)\rangle & otherwise.}
+\eqno(2)
+$$
+%
+Here, $\langle xyz\rangle = xy \lor xz \lor yz$ is the majority-of-three
+function.  Then $Y_n = Y(G_n)$ is the $Y$ function of size $n$.
+
+For example, $Y_1$ is the identity function, $Y_2$ is the majority function, and
+if we label the nodes in $G_3$ with $x_1$, $x_2$, $x_3$, $x_4$, $x_5$, $x_6$
+from top to bottom and from left to right, we obtain $Y_3 = \langle\langle
+x_1x_2x_3\rangle\langle x_2x_4x_5\rangle\langle x_3x_5x_6\rangle\rangle$.
+
+We highly recommend to read Exercise 67 in Section 7.1.1.\ of Donald E.\ Knuth's
+{\sl The Art of Computer Programming}.  A link to an online version of the
+exercise is provided on the contest homepage.
+
+\smallskip\noindent{\bf Task.} \enspace Implement a logic synthesis algorithm
+that takes as input a combinational benchmark (provided in Verilog, Aiger, or
+Blif format) and outputs a YIG ($Y$-inverter graph) that is composed of
+$Y$-gates, which implement the $Y$ function, and inverters.  The output format
+should be clear from the following example.
+
+\medskip
+\bgroup
+\parindent=0pt
+\parskip=0pt
+\baselineskip=12pt
+\tt\obeylines
+.i 8
+.o 2
+w1 = Y2(i1, \char`\~i2, 0)
+w2 = Y3(i1, \char`\~i1, 1, i3, i4, w1)
+o1 = Y3(w1, w2, 0, 1, \char`\~i5, i6)
+o2 = Y2(i7, i8, w2)
+.e
+\egroup
+
+\smallskip\noindent The first two lines give the number of primary inputs and
+primary outputs, which are implicitly named {\tt i1}, {\tt i2}, \dots\ and {\tt
+o1}, {\tt o2}, \dots\ Then gates are defined, which store their result either in
+a wire called {\tt w1}, {\tt w2}, \dots, or in an primary output.  Gates take as
+input previously defined wires, primary inputs, or constants.  All inputs can be
+inverted using {\tt \char`\~}.  We provide converters for YIG files into Verilog,
+Aiger, and Blif on the contest homepage.  The goal is to find a YIG with a small
+number of gates.  Each gate has unit cost.  For example, the given example above
+has cost $4$.
+
+\smallskip\noindent{\bf Hints.} \enspace Since $Y_2$ is the majority-of-three
+function, YIGs naturally contain majority-inverter graphs (MIGs).  However, one
+can do better when using larger $Y$-gates.  Note that $Y_2(x_1, x_2, 0) = x_1
+\land x_2$ and $Y_2(x_1, x_2, 1) = x_1 \lor x_2$.  There is a popular 3-input
+function contained in $Y_3$ in a similar way.
+
+\bye
