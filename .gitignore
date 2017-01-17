@@ -1,0 +1,14 @@
+**/*~
+
+/.DS_Store
+*.log
+*.pgf
+
+/code/yig2verilog
+/code/yig2verilog.idx
+/code/yig2verilog.o
+/code/yig2verilog.pdf
+/code/yig2verilog.scn
+/code/yig2verilog.tex
+/code/yig2verilog.toc
+/code/yig2verilog.c
