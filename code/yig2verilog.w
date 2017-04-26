@@ -32,7 +32,7 @@ is limited to 30.  Note that the $Y_{30}$ operation has 496 inputs.
 #include <string.h>
 
 typedef unsigned int uint;
-typedef char args_vec[3 + log_max_ids][max_y_args];
+typedef char args_vec[max_y_args][max_y_args + 3];
 
 @<Subroutines@>;
 
@@ -254,5 +254,7 @@ void print_expression( args_vec args, size_t x, size_t y, size_t n ) {
 
 @<Print Verilog footer@>=
 printf( "endmodule // top\n" );
+if (buf)
+  free(buf);
 
 @*Index.
