@@ -1,5 +1,11 @@
 # IWLS 2017 Programming Contest: "Y Logic Synthesis"
 
+## **NEWS**
+
+**_The competition benchmarks are now online and can be found in the [benchmarks](benchmarks) directory._** Each benchmark is available in Verilog, Aiger, and Blif format, each of them representing an AND-inverter graph.  It is sufficient that the synthesis algorithm can parse *one* of the file types.
+
+## Description
+
 In 2017, we will organize a programming contest at the [International Workshop on Logic & Synthesis](http://www.iwls.org/iwls2017/) (IWLS).  To participate, please follow these steps:
 
 1. Read the [contest description](contest.pdf).
