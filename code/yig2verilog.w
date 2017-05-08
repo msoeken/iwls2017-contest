@@ -43,6 +43,7 @@ int main( int argc, char *argv[] ) {
   args_vec args;
   int first = 1, i, j;
   uint npis = 0u, npos = 0u, nwires = 0u, id;
+  int tmpctr = 0, tmpid;
 
   @<Process the command line@>;
   @<Parse and transform YIG@>;
@@ -220,34 +221,28 @@ void print_vars( const char * name, char prefix, uint count ) {
 recursion on |print_expression| with the current size.
 
 @<Print Verilog assignment@>=
-printf( "  assign %c%d = ", type, id );
-print_expression( args, 0, 0, size );
-printf( ";\n" );
+tmpid = print_expression( args, 0, 0, size, &tmpctr );
+printf( "  assign %c%d = tmp%d;\n", type, id, tmpid );
 
 @ This function recurses by splitting larger $Y$ functions into
 smaller ones.  If it finds a $Y_0$ function, it is translated into a
 literal.
 
 @<Subroutines@>=
-void print_expression( args_vec args, size_t x, size_t y, size_t n ) {
+int print_expression( args_vec args, size_t x, size_t y, size_t n, int* tmpctr ) {
   int i1, i2, i3;
   if ( n == 0 ) {
-    printf( args[bar_to_index( x, y )] );
+    printf( "  wire tmp%d;\n", *tmpctr );
+    printf( "  assign tmp%d = %s;\n", *tmpctr, args[bar_to_index( x, y )] );
   } else {
-    printf( "((" );
-    print_expression( args, x, y, n - 1 );
-    printf( " & " );
-    print_expression( args, x, y + 1, n - 1 );
-    printf( ") | (" );
-    print_expression( args, x, y, n - 1 );
-    printf( " & " );	  
-    print_expression( args, x + 1, y, n - 1 );
-    printf( ") | (" );
-    print_expression( args, x, y + 1, n - 1 );
-    printf( " & " );
-    print_expression( args, x + 1, y, n - 1 );
-    printf( "))" );
+    i1 = print_expression( args, x, y, n - 1, tmpctr );
+    i2 = print_expression( args, x, y + 1, n - 1, tmpctr );
+    i3 = print_expression( args, x + 1, y, n - 1, tmpctr );
+    printf( "  wire tmp%d;\n", *tmpctr );
+    printf( "  assign tmp%d = (tmp%d & tmp%d) | (tmp%d & tmp%d) | (tmp%d & tmp%d);\n", *tmpctr, i1, i2, i1, i3, i2, i3 );
   }
+
+  return (*tmpctr)++;
 }
 
 @ That's all, folks!
