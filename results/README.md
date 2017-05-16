@@ -12,7 +12,7 @@
 The team columns indicate the number of Y gates in the YIG.  All submitted results were checked for correctness using ABC's ``cec`` command.
 
 | Name | Inputs | Outputs | Size | Levels | UFRGS |   NTU |  EPFL | Bremen |
-|------+--------+---------+------+--------+-------+-------+-------+--------|
+| ---- | -----: | ------: | ---: | -----: | ----: | ----: | ----: | -----: |
 | y0   |    128 |     160 | 8136 |     23 |  1080 |  3926 |  7892 |   7617 |
 | y1   |    128 |      94 | 5326 |     25 |   621 |  2751 |  5283 |   5059 |
 | y2   |    207 |     108 | 2893 |     61 |   217 |   495 |  1391 |   2320 |
@@ -23,5 +23,4 @@ The team columns indicate the number of Y gates in the YIG.  All submitted resul
 | y7   |     78 |     120 | 1235 |     84 |   314 |   499 |  1226 |   1307 |
 | y8   |    420 |       1 | 1186 |     94 |   125 |   184 |   906 |   1182 |
 | y9   |     12 |       1 |  772 |    109 |    34 |   337 |   752 |    714 |
-|------+--------+---------+------+--------+-------+-------+-------+--------|
-|      |        |         |      |        |  5079 | 12539 | 28276 |  29718 |
+|      |        |         |      |  Total |  5079 | 12539 | 28276 |  29718 |
